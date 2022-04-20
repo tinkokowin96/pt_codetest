@@ -1,26 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { ThemeProvider } from '@mui/material'
+import { useSelector } from 'react-redux'
+import { Container } from './App.styles'
+import CreateAlert from './components/createAlert'
+import CreateAlertForm from './components/createAlertForm'
+import Popup from './components/popup'
+import SavedAlerts from './components/savedAlerts'
+import { initialStateType } from './redux/alert.slice'
+import Globalstyles from './styles/global.styles'
+import { theme } from './styles/theme.style'
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+      const { openForm, openPopup, popupContent } = useSelector(
+            (state: initialStateType) => state,
+      )
+
+      return (
+            <ThemeProvider theme={theme}>
+                  <Container>
+                        <Globalstyles />
+                        {openForm && <CreateAlertForm />}
+                        {openPopup && <Popup content={popupContent} />}
+                        <SavedAlerts />
+                        <CreateAlert />
+                  </Container>
+            </ThemeProvider>
+      )
 }
 
-export default App;
+export default App
